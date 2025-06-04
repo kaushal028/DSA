@@ -1,3 +1,13 @@
+/*The following doubly linked list has following operations:-
+1)Push_front
+2)Push-back
+3)Pop_front
+4)Pop_back
+5)Insert at any position
+6)Delete at any position
+7)Print the list
+ and also a size method that gives us the size of the list
+ feel free to use any test cases */
 #include<iostream>
 using namespace std;
 class Node
@@ -27,6 +37,7 @@ void push_front(int val)
     if(head==NULL)
     {
         head=tail=newnode;
+        return;
     }
     else
     {
@@ -160,6 +171,10 @@ void deleteAtPosition(int position)
     {
         cout<<"List is empty"<<endl;
     }
+    else if(position>=size||position<0)
+    {
+        cout<<"Positional Error"<<endl;
+    }
     else if(position==size-1)
     {
      pop_back();
@@ -168,10 +183,7 @@ void deleteAtPosition(int position)
     {
         pop_front();
     }
-    else if(position>=size||position<0)
-    {
-        cout<<"Positional Error"<<endl;
-    }
+    
     else{
     int count=0;
     while(count!=position)
@@ -188,13 +200,43 @@ void deleteAtPosition(int position)
 int main()
 {
     doubly_ll dll;
-    
-    dll.push_front(30);
-    dll.push_front(20);
-    dll.push_front(40);
-    dll.push_front(90);
-    dll.push_front(100);
-    dll.deleteAtPosition(4);
+
+    // Test push_front and push_back
+    dll.push_front(10);      // List: 10
+    dll.push_back(20);       // List: 10<->20
+    dll.push_front(5);       // List: 5<->10<->20
+    dll.push_back(25);       // List: 5<->10<->20<->25
     dll.print_list();
+
+    // Test sizeoflist
+    cout << "Size: " << dll.sizeoflist() << endl;
+
+    // Test insert at various positions
+    dll.insert(1, 0);        // Insert at head: 1<->5<->10<->20<->25
+    dll.insert(15, 3);       // Insert in middle: 1<->5<->10<->15<->20<->25
+    dll.insert(30, dll.sizeoflist()); // Insert at end: 1<->5<->10<->15<->20<->25<->30
+    dll.print_list();
+
+    // Test deleteAtPosition
+    dll.deleteAtPosition(0); // Delete head: 5<->10<->15<->20<->25<->30
+    dll.deleteAtPosition(2); // Delete middle: 5<->10<->20<->25<->30
+    dll.deleteAtPosition(dll.sizeoflist()-1); // Delete tail: 5<->10<->20<->25
+    dll.print_list();
+
+    // Test pop_front and pop_back
+    dll.pop_front();         // Remove head: 10<->20<->25
+    dll.pop_back();          // Remove tail: 10<->20
+    dll.print_list();
+
+    // Test edge cases
+    dll.deleteAtPosition(10); // Positional Erorr
+    dll.pop_front();          // 20
+    dll.pop_back();           // List becomes empty
+    dll.print_list();         // Should print "NULL"
+    dll.pop_back();           // Try pop on empty list
+
+    // Final size
+    cout << "Final Size: " << dll.sizeoflist() << endl;
+
     return 0;
 }
