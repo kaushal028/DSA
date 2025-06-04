@@ -1,4 +1,3 @@
-
 /*The following circular linked list has following operations:-
 1)Push_front
 2)Push-back
@@ -104,7 +103,7 @@ class linked_list{
     {
         if(head==NULL)
         {
-            cout<<"Linked List is empty"<<endl;
+            cout<<"Can't Pop linked List is empty"<<endl;
            return;
         }
       else if(head==tail)
@@ -165,8 +164,12 @@ void insert(int val,int position)
         push_front(val);
         return;
     }
+    else if(position==size)
+    {
+        push_back(val);
+    }
     
-    else if(position<=size)
+    else if(position<size)
     {
         int count=0;
         Node* newnode=new Node(val);
@@ -181,7 +184,7 @@ void insert(int val,int position)
     }
     else
     {
-        cout<<val<<" cannot be inserted,Error Position !!!"<<endl;
+        cout<<val<<" Cannot be inserted,Error Position !!!"<<endl;
     }
 }
 int sizeoflist()//Returns the size of our linked list
@@ -210,14 +213,43 @@ int sizeoflist()//Returns the size of our linked list
 int main()
 {
     linked_list ll;
-    //Some Testcases
-    ll.push_front(20);
-    ll.push_front(30);
-    ll.push_back(60);
-    ll.push_front(40);
-    ll.push_back(50);
+
+    // Test push_front and push_back
+    ll.push_front(10);      // List: 10
+    ll.push_back(20);       // List: 10->20
+    ll.push_front(5);       // List: 5->10->20
+    ll.push_back(25);       // List: 5->10->20->25
     ll.printlist();
-    ll.deleteAtPosition(4);
+
+    // Test sizeoflist
+    cout << "Size: " << ll.sizeoflist() << endl;
+
+    // Test insert at various positions
+    ll.insert(1, 0);        // Insert at head: 1->5->10->20->25
+    ll.insert(15, 3);       // Insert in middle: 1->5->10->15->20->25
+    ll.insert(30, ll.sizeoflist()); // Insert at end: 1->5->10->15->20->25->30
     ll.printlist();
+
+    // Test deleteAtPosition
+    ll.deleteAtPosition(0); // Delete head: 5->10->15->20->25->30
+    ll.deleteAtPosition(2); // Delete middle: 5->10->20->25->30
+    ll.deleteAtPosition(ll.sizeoflist()-1); // Delete tail: 5->10->20->25
+    ll.printlist();
+
+    // Test pop_front and pop_back
+    ll.pop_front();         // Remove head: 10->20->25
+    ll.pop_back();          // Remove tail: 10->20
+    ll.printlist();
+
+    // Test edge cases
+    ll.deleteAtPosition(10); // Invalid position
+    ll.pop_front();          // 20
+    ll.pop_back();           // List becomes empty
+    ll.printlist();          // Should print "Linked List is empty"
+    ll.pop_back();           // Try pop on empty list
+
+    // Final size
+    cout << "Final Size: " << ll.sizeoflist() << endl;
+
     return 0;
 }
