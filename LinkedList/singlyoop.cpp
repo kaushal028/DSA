@@ -1,3 +1,15 @@
+
+/*The following circular linked list has following operations:-
+1)Push_front
+2)Push-back
+3)Pop_front
+4)Pop_back
+5)Insert at any position
+6)Delete at any position
+7)Print the list
+ and also a size method that gives us the size of the list
+Feel Free to use any testcases*/
+
 #include<iostream>
 using namespace std;
 class Node{//Class for the node
@@ -10,6 +22,9 @@ class Node{//Class for the node
         data=val;
         next=NULL;
     }
+
+
+    
 };
 
 class linked_list{
@@ -34,6 +49,8 @@ class linked_list{
             head=newnode;
         }
     }
+
+    
     void printlist()
     {
        
@@ -107,6 +124,39 @@ class linked_list{
 
         }
     }
+void deleteAtPosition(int position)
+{
+int size=sizeoflist();
+    Node* temp=head;
+    if(head==NULL)
+    {
+        cout<<"List is empty"<<endl;
+    }
+    else if(position>=size||position<0)
+    {
+        cout<<"Positional Error"<<endl;
+    }
+    else if(position==size-1)
+    {
+     pop_back();
+    }
+    else if(position==0)
+    {
+        pop_front();
+    }
+    
+    else{
+    int count=0;
+    while(count!=position-1)
+    {
+        temp=temp->next;
+        count++;
+    }
+    Node* storetemp=temp->next;
+   temp->next=temp->next->next;
+   delete storetemp;
+}
+}
 void insert(int val,int position)
 {
     int size=sizeoflist();
@@ -134,7 +184,7 @@ void insert(int val,int position)
         cout<<val<<" cannot be inserted,Error Position !!!"<<endl;
     }
 }
-int sizeoflist()
+int sizeoflist()//Returns the size of our linked list
 {
         Node* temp=head;
         int count=0;
@@ -145,7 +195,7 @@ int sizeoflist()
         }
         return count;
 }
-~linked_list() 
+~linked_list() //Destructor to cleanup the memory after program ends so no memory leaks
 {
     Node* temp = head;
     while(temp != NULL) {
@@ -160,19 +210,14 @@ int sizeoflist()
 int main()
 {
     linked_list ll;
+    //Some Testcases
     ll.push_front(20);
     ll.push_front(30);
     ll.push_back(60);
     ll.push_front(40);
     ll.push_back(50);
-
-    ll.insert(70,3);
-    ll.insert(60,7);
-    ll.pop_back();
-
- ll.insert(70,6);
-    cout<<"Linked List contains:"<<endl;
-
+    ll.printlist();
+    ll.deleteAtPosition(4);
     ll.printlist();
     return 0;
 }
